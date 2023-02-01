@@ -15,13 +15,19 @@
     }
   }
 
-  form {
-    align-items: center;
+  .add-contain {
+    align-items: flex-end;
     display: flex;
-    justify-content: space-around;
 
-    .tasks-form-field {
-      margin-bottom: -1.25em;
+    input {
+      border: 0;
+      border-bottom: 2px solid rgb(7, 67, 179);
+      flex: 1;
+      margin-right: 0.5rem;
+
+      &:focus-visible {
+        outline: none;
+      }
     }
   }
 
