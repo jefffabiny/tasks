@@ -3,8 +3,23 @@
     <mat-card-header> <mat-card-title>Tasks</mat-card-title></mat-card-header>
     <mat-card-content>
       <div class="add-contain">
-        <input type="text" placeholder="Ex. water plants" value="" />
-        <button mat-raised-button color="primary">Primary</button>
+        <input
+          type="text"
+          placeholder="Ex. water plants"
+          (change)="onChange($event)"
+          [attr.disabled]="(isAttemptingAdd$ | async) ? '' : null"
+        />
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="handleAddButtonClick()"
+          [attr.disabled]="(isAttemptingAdd$ | async) ? '' : null"
+        >
+          <ng-container *ngIf="isAttemptingAdd$ | async; else elseBlock"
+            ><mat-spinner color="accent" [diameter]="20"></mat-spinner
+          ></ng-container>
+          <ng-template #elseBlock>add</ng-template>
+        </button>
       </div>
 
       <mat-divider></mat-divider>
