@@ -8,9 +8,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { TasksContainerComponent } from './tasks-container/tasks-container.component';
+import { ApiService } from './api/api';
 
 @NgModule({
   declarations: [AppComponent, TasksContainerComponent],
@@ -24,8 +26,9 @@ import { TasksContainerComponent } from './tasks-container/tasks-container.compo
     MatInputModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [ApiService],
   bootstrap: [AppComponent],
   exports: [MatIconModule],
 })

@@ -1,6 +1,16 @@
 <div>
-  <div *ngIf="emptySet" class="empty-set">
+  <ng-container *ngIf="allTasks$ | async as allTasks">
+    <ng-container *ngIf="allTasks.length; else empty">
+      <div *ngFor="let task of allTasks">
+        {{ task.task }}
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
+
+<ng-template #empty>
+  <div class="empty-set">
     <p>No tasks.</p>
     <p>Add a task above to get started.</p>
   </div>
-</div>
+</ng-template>
