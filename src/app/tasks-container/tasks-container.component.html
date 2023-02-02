@@ -2,7 +2,16 @@
   <ng-container *ngIf="allTasks$ | async as allTasks">
     <ng-container *ngIf="allTasks.length; else empty">
       <div *ngFor="let task of allTasks">
-        {{ task.task }}
+        <mat-card class="task-wrapper"
+          ><mat-card-content class="task-container"
+            ><span>{{ task.task }}</span>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="handleDelete(task._id)"
+            >
+              <mat-icon fontIcon="delete"></mat-icon></button></mat-card-content
+        ></mat-card>
       </div>
     </ng-container>
   </ng-container>

@@ -1,3 +1,19 @@
 .empty-set {
   text-align: center;
 }
+.task-wrapper {
+  margin-bottom: 0.5rem;
+
+  .task-container {
+    align-items: center;
+    display: flex;
+
+    span {
+      flex: 1;
+    }
+
+    mat-icon {
+      margin: 0;
+    }
+  }
+}

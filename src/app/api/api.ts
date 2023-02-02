@@ -7,7 +7,7 @@ import { Task } from '../model';
 export class ApiService {
   constructor(private http: HttpClient) {}
 
-  crudURL = 'https://crudcrud.com/api/e7660de50c6f460d999194306b13cef1';
+  crudURL = 'https://crudcrud.com/api/6390a569a4184e1c950d481a71c7b5be';
 
   addTask(task: any): Observable<Object> {
     return this.http.post(`${this.crudURL}/tasks`, task);
@@ -17,7 +17,7 @@ export class ApiService {
     return this.http.get<Array<Task>>(`${this.crudURL}/tasks`);
   }
 
-  deleteAllTasks(): void {
-    this.http.delete(`${this.crudURL}/tasks/${1}`);
+  deleteTask(id: string): Observable<any> {
+    return this.http.delete(`${this.crudURL}/tasks/${id}`);
   }
 }

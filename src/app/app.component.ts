@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
       this.apiService.addTask(newTask).subscribe({
         next: (response) => {
           this.isAttemptingAdd$.next(false);
+          this.allTasks$ = this.apiService.getTasks();
         },
         error: (err) => console.log(err),
       });
