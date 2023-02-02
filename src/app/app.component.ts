@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, take } from 'rxjs';
+import { FormControl } from '@angular/forms';
+
 import { ApiService } from './api/api';
-import { Task } from './model';
+import { NewTask, Task } from './model';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +11,9 @@ import { Task } from './model';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  newToDoVal$ = new BehaviorSubject('');
   isAttemptingAdd$ = new BehaviorSubject(false);
   allTasks$?: Observable<Array<Task>>;
+  newTask = new FormControl('');
 
   constructor(public apiService: ApiService) {}
 
@@ -19,21 +21,19 @@ export class AppComponent implements OnInit {
     this.allTasks$ = this.apiService.getTasks();
   }
 
-  onChange(e: Event) {
-    this.newToDoVal$.next((e.target as HTMLInputElement).value);
-  }
-
   handleAddButtonClick() {
     this.isAttemptingAdd$.next(true);
-    this.newToDoVal$.pipe(take(1)).subscribe((val) => {
-      let newTask = { task: val, isDone: false };
-      this.apiService.addTask(newTask).subscribe({
-        next: (response) => {
-          this.isAttemptingAdd$.next(false);
-          this.allTasks$ = this.apiService.getTasks();
-        },
-        error: (err) => console.log(err),
-      });
+    let taskObj: NewTask = {
+      task: this.newTask.value as string,
+      isDone: false,
+    };
+    this.apiService.addTask(taskObj).subscribe({
+      next: () => {
+        this.isAttemptingAdd$.next(false);
+        this.newTask.reset();
+        this.allTasks$ = this.apiService.getTasks();
+      },
+      error: (err) => console.log(err),
     });
   }
 }

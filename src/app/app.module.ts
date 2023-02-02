@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { TasksContainerComponent } from './tasks-container/tasks-container.component';
@@ -27,6 +28,7 @@ import { ApiService } from './api/api';
     MatIconModule,
     MatProgressSpinnerModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [ApiService],
   bootstrap: [AppComponent],

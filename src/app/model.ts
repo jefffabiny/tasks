@@ -1,5 +1,7 @@
-export interface Task {
+export interface NewTask {
   task: string;
-  _id: string;
   isDone: boolean;
+}
+export interface Task extends NewTask {
+  _id: string;
 }

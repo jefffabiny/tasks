@@ -4,9 +4,10 @@
     <mat-card-content>
       <div class="add-contain">
         <input
-          type="text"
           placeholder="Ex. water plants"
-          (change)="onChange($event)"
+          id="name"
+          type="text"
+          [formControl]="newTask"
           [attr.disabled]="(isAttemptingAdd$ | async) ? '' : null"
         />
         <button
