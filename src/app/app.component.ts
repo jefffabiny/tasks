@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, take } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  startWith,
+  Subject,
+  switchMap,
+  take,
+} from 'rxjs';
 import { FormControl } from '@angular/forms';
 
 import { ApiService } from './api/api';
@@ -11,6 +18,7 @@ import { NewTask, Task } from './model';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  private readonly refreshSubject = new Subject<void>();
   isAttemptingAdd$ = new BehaviorSubject(false);
   allTasks$?: Observable<Array<Task>>;
   newTask = new FormControl('');
@@ -18,7 +26,10 @@ export class AppComponent implements OnInit {
   constructor(public apiService: ApiService) {}
 
   ngOnInit(): void {
-    this.allTasks$ = this.apiService.getTasks();
+    this.allTasks$ = this.refreshSubject.pipe(
+      startWith(undefined),
+      switchMap(() => this.apiService.getTasks())
+    );
   }
 
   handleAddButtonClick() {
@@ -31,9 +42,17 @@ export class AppComponent implements OnInit {
       next: () => {
         this.isAttemptingAdd$.next(false);
         this.newTask.reset();
-        this.allTasks$ = this.apiService.getTasks();
+        this.refreshSubject.next();
       },
       error: (err) => console.log(err),
+    });
+  }
+
+  deleteTask(id: string) {
+    this.apiService.deleteTask(id).subscribe({
+      next: () => {
+        this.refreshSubject.next();
+      },
     });
   }
 }

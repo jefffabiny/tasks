@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Output, EventEmitter } from '@angular/core';
+
 import { Task } from '../model';
-import { ApiService } from '../api/api';
 
 @Component({
   selector: 'app-tasks-container',
@@ -9,13 +10,11 @@ import { ApiService } from '../api/api';
   styleUrls: ['./tasks-container.component.scss'],
 })
 export class TasksContainerComponent {
-  constructor(private apiService: ApiService) {}
+  constructor() {}
   @Input() allTasks$?: Observable<Array<Task>>;
+  @Output() deleteEvent = new EventEmitter<string>();
 
   handleDelete(id: string) {
-    this.apiService.deleteTask(id).subscribe({
-      next: () => (this.allTasks$ = this.apiService.getTasks()),
-      error: (err) => console.log(err),
-    });
+    this.deleteEvent.emit(id);
   }
 }

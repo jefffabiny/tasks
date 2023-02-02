@@ -25,7 +25,10 @@
 
       <mat-divider></mat-divider>
 
-      <app-tasks-container [allTasks$]="allTasks$"></app-tasks-container>
+      <app-tasks-container
+        [allTasks$]="allTasks$"
+        (deleteEvent)="deleteTask($event)"
+      ></app-tasks-container>
     </mat-card-content>
   </mat-card>
 </div>
